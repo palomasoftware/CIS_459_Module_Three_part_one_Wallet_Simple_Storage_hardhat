@@ -2,13 +2,6 @@ import React, {Component} from 'react'
 import Web3 from 'web3'
 import logo from './logo.svg';
 import './App.css';
-
-import SimpleAbi from './contractsData/SimpleStorage.json'
-import SimpleAddress from './contractsData/SimpleStorage-address.json'
-
-
-
-// vestigal from ganache implementation
 //import votingArtifact from "../../build/contracts/Voting.json";
 //1.) start ganache (include new DNS)
 //2.) update truffle-config wtih dns
@@ -21,49 +14,15 @@ class SimpleStorage extends Component {
 
     componentWillMount(){
 
-            this.loadWeb3()
+//            this.loadWeb3()
 	    this.loadBlockchainData()
     }
-    async loadWeb3(){ 
-	if (window.ethereum) { 
-		window.web3 = new Web3(window.ethereum)
-		await window.ethereum.enable()
-        	window.alert('my window is connected!!!');
-
-		window.ethereum.request({ method: 'eth_requestAccounts'})
-			.then(result => {
-//				accountChangedHandler(result[0]);
-//				setConnButtonText('Wallet Connected');
-		window.alert('my wallet is connected');
-
-
-
-			})
-//			.catch(error => {
-//				setErrorMessage(error.message);
-//			
-//			});
-
-
-	}
-	else if (window.web3) { 
-		window.web3 = new Web3(window.web3.currentProvider.enable())
-	}
-	else { 
-		window.alert('non-ethereum browser detected - you should consider trying MetaMask!')
-	}
-}
     async loadBlockchainData(){
-        
-
-    console.log('VotingAddress.address', SimpleAddress.address)
-    console.log('VotingAbi.abi', SimpleAbi.abi)
-
-	    const web3 = new Web3(window.web3.currentProvider);
+    //      const web3 = new Web3(window.web3.currentProvider);
          
 
 	    //. if (!web3.currentProvider){
-         // works!!!!!        const web3 = new Web3(new Web3.providers.HttpProvider("http://ec2-35-87-194-231.us-west-2.compute.amazonaws.com:8545"))
+     const web3 = new Web3(new Web3.providers.HttpProvider("http://ec2-35-87-194-231.us-west-2.compute.amazonaws.com:8545"))
          // }//
 	        //. if (!web3.currentProvider){
     // worked - no wallet     const web3 = new Web3(new Web3.providers.HttpProvider("http://ec2-35-94-196-52.us-west-2.compute.amazonaws.com:8545"))
@@ -88,10 +47,21 @@ class SimpleStorage extends Component {
          // const deployedNetwork = votingArtifact.networks[networkId];
 	 this.setState( { account : accounts[0] }) 
 	 console.log(account);
-         const contract = new web3.eth.Contract(SimpleAbi.abi); 
+         let jsonData = require('./SimpleStorage.json');
+ // in this case the updated contract options address i sfromi 
+	    // a separate file
+
+	    //       var networkKey =  Object.keys(jsonData['networks'])[Object.keys(jsonData.networks).length-1] 
+    //     console.log(networkKey)	
+  //       console.log(jsonData['networks'][networkKey]["address"] )
+  //       console.log("get ID based solution")
+  //       console.log(networkId)
+  //       // error ? copy over the updated Voting.json from bulid/contract
+  //       console.log(jsonData['networks'][networkId]["address"] )
+  //       //const contract = new web3.eth.Contract(VOTING_ABI);
+         const contract = new web3.eth.Contract(jsonData.abi); 
   //       contract.options.address = jsonData['networks'][networkId]["address"]
-         contract.options.address = SimpleAddress.address
-	    //"0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
+         contract.options.address = "0x7a2088a1bFc9d81c55368AE168C2C02570cB814F"
 
 	    this.setState( { contract }) 
 	}

@@ -8,7 +8,7 @@ import SimpleAddress from './contractsData/SimpleStorage-address.json'
 
 
 
-// vestigal from ganache implementation
+
 //import votingArtifact from "../../build/contracts/Voting.json";
 //1.) start ganache (include new DNS)
 //2.) update truffle-config wtih dns
@@ -24,13 +24,13 @@ class SimpleStorage extends Component {
             this.loadWeb3()
 	    this.loadBlockchainData()
     }
-    async loadWeb3(){ 
+ async loadWeb3(){ 
 	if (window.ethereum) { 
 		window.web3 = new Web3(window.ethereum)
 		await window.ethereum.enable()
-        	window.alert('my window is connected!!!');
+	window.alert('my window is connected!!!');
 
-		window.ethereum.request({ method: 'eth_requestAccounts'})
+			window.ethereum.request({ method: 'eth_requestAccounts'})
 			.then(result => {
 //				accountChangedHandler(result[0]);
 //				setConnButtonText('Wallet Connected');
@@ -88,7 +88,22 @@ class SimpleStorage extends Component {
          // const deployedNetwork = votingArtifact.networks[networkId];
 	 this.setState( { account : accounts[0] }) 
 	 console.log(account);
-         const contract = new web3.eth.Contract(SimpleAbi.abi); 
+         //let jsonData = require('./SimpleStorage.json');
+ // in this case the updated contract options address i sfromi 
+	    // a separate file
+
+	    //       var networkKey =  Object.keys(jsonData['networks'])[Object.keys(jsonData.networks).length-1] 
+    //     console.log(networkKey)	
+  //       console.log(jsonData['networks'][networkKey]["address"] )
+  //       console.log("get ID based solution")
+  //       console.log(networkId)
+  //       // error ? copy over the updated Voting.json from bulid/contract
+  //       console.log(jsonData['networks'][networkId]["address"] )
+  //       //const contract = new web3.eth.Contract(VOTING_ABI);
+  //
+	    //
+	    //        //const contract = new web3.eth.Contract(jsonData.abi);
+           const contract = new web3.eth.Contract(SimpleAbi.abi); 
   //       contract.options.address = jsonData['networks'][networkId]["address"]
          contract.options.address = SimpleAddress.address
 	    //"0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
